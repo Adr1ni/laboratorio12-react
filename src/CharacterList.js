@@ -1,9 +1,7 @@
-// src/CharacterList.js
-
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { Container, Card, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class CharacterList extends Component {
   state = {
@@ -11,7 +9,8 @@ class CharacterList extends Component {
   };
 
   componentDidMount() {
-    axios.get('https://swapi.dev/api/people/')
+    axios
+      .get('https://swapi.dev/api/people/')
       .then((response) => {
         this.setState({ characters: response.data.results });
       })
@@ -24,15 +23,50 @@ class CharacterList extends Component {
     return (
       <Container className="mt-4">
         <h2 className="text-center mb-4">Personajes de Star Wars</h2>
-        <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <Row xs={1} md={2} lg={3} xl={4} className="g-4">
           {this.state.characters.map((character, index) => (
-            <Col key={index} className="mb-4">
-              <Card>
+            <Col key={index}>
+              <Card className="custom-card">
                 <Card.Body>
                   <Card.Title className="fw-bold">{character.name}</Card.Title>
                   <Card.Text>
                     <strong>Género:</strong> {character.gender}<br />
-                    <strong>Año de nacimiento:</strong> {character.birth_year}
+                    <strong>Año de nacimiento:</strong> {character.birth_year}<br />
+                    <strong>Altura:</strong> {character.height} cm<br />
+                    <strong>Peso:</strong> {character.mass} kg<br />
+                    <strong>Color de cabello:</strong> {character.hair_color}<br />
+                    <strong>Color de piel:</strong> {character.skin_color}<br />
+                    <strong>Color de ojos:</strong> {character.eye_color}<br />
+                    {character.films && (
+                      <div>
+                        <strong>Películas:</strong>
+                        <ul>
+                          {character.films.map((film, index) => (
+                            <li key={index}>{film}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {character.vehicles && (
+                      <div>
+                        <strong>Vehículos:</strong>
+                        <ul>
+                          {character.vehicles.map((vehicle, index) => (
+                            <li key={index}>{vehicle}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {character.starships && (
+                      <div>
+                        <strong>Naves espaciales:</strong>
+                        <ul>
+                          {character.starships.map((starship, index) => (
+                            <li key={index}>{starship}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </Card.Text>
                 </Card.Body>
               </Card>

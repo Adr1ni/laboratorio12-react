@@ -1,25 +1,23 @@
-// CharacterLoader.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Container, Form, Card, Row, Col } from 'react-bootstrap';
 
 function CharacterLoader() {
   const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState(''); // Nuevo estado para la búsqueda
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    loadCharacters();
+  }, []);
 
   const loadCharacters = () => {
-    setLoading(true);
-
     axios
       .get('https://swapi.dev/api/people/')
       .then((response) => {
         setCharacters(response.data.results);
-        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
-        setLoading(false);
       });
   };
 
@@ -32,44 +30,43 @@ function CharacterLoader() {
   );
 
   return (
-    <Container className="mt-4">
-      <h1  className="mb-4 text-center">Personajes de Star Wars</h1>
-
-      {/* Agregar el formulario de búsqueda */}
-      <Form className="mb-3">
-        <Form.Group controlId="formSearch" className="mb-3">
+    <Container className="mt-4 star-background">
+      <h1 className="main-title text-center mb-4">
+        Explorar personajes de <span className="highlight-yellow">Star Wars</span>
+      </h1><br />
+      <Form.Group controlId="formSearch" className="mb-3">
+        <div className="input-group">
           <Form.Control
             type="text"
             placeholder="Buscar personaje"
             value={search}
             onChange={handleSearchChange}
-            className="rounded-pill py-2 px-3"
+            className="form-control rounded-pill py-3 px-4"
           />
-        </Form.Group>
-      </Form>
-      <Button
-        variant="primary"
-        onClick={loadCharacters}
-        disabled={loading}
-        className="mb-3 rounded-pill"
-        >
-        {loading ? 'Cargando Personajes...' : 'Cargar Personajes'}
-      </Button>
+          <button className="btn btn-primary rounded-pill btn-search" type="button">
+            Buscar
+          </button>
+        </div>
+      </Form.Group>
 
-      <Row>
-        {/* Mapear sobre los personajes filtrados */}
+      <Row xs={1} md={2} lg={3} className="g-4">
         {filteredCharacters.map((character, index) => (
-          <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-          <Card className="h-100 shadow-sm rounded">
-            <Card.Body>
-              <Card.Title>{character.name}</Card.Title>
-              <Card.Text>
-                <strong>Género:</strong> {character.gender}<br />
-                <strong>Año de nacimiento:</strong> {character.birth_year}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
+          <Col key={index}>
+            <Card className="character-card">
+              <Card.Body className="character-body">
+                <Card.Title className="card-title">{character.name}</Card.Title>
+                <Card.Text>
+                  <strong>Género:</strong> {character.gender}<br />
+                  <strong>Año de nacimiento:</strong> {character.birth_year}<br />
+                  <strong>Altura:</strong> {character.height} cm<br />
+                  <strong>Peso:</strong> {character.mass} kg<br />
+                  <strong>Color de cabello:</strong> {character.hair_color}<br />
+                  <strong>Color de piel:</strong> {character.skin_color}<br />
+                  <strong>Color de ojos:</strong> {character.eye_color}<br />
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
       </Row>
     </Container>

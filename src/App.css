@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(15, 1, 1);
 }
 
 .App-link {
@@ -36,30 +36,22 @@
     transform: rotate(360deg);
   }
 }
-/* styles.css */
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  margin-top: 20px;
+  margin-top: 0px;
+  color: #282c34;
 }
 
 h1 {
-  color: #007bff;
+  color: #0fd9e7;
 }
 
-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
 
 button:disabled {
   background-color: #6c757d;
@@ -67,6 +59,49 @@ button:disabled {
 }
 
 .card {
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.btn-search {
+  background-color: #0fd9e7;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.btn-search:hover {
+  background-color: #1d5558;
+  cursor: pointer;
+}
+
+.star-background {
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+.character-card {
+  background-color: rgba(195, 231, 15, 0.5);
+  color: rgb(19, 18, 18);
+  padding: 10px; 
+  border-radius: 10px; 
+  margin: 10px auto;
+  max-width: 300px;
+}
+
+.character-body {
+  padding: 10px;
+}
